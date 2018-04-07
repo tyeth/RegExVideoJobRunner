@@ -8,6 +8,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="NET-Standard-Library-Extension" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AzureMediaExampleConsole">
+      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\AzureMediaExampleConsole\bin\Debug\AzureMediaExampleConsole.dll</HintPath>
+    </Reference>
+    <Reference Include="ProcessOutputJson">
+      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\ProcessOutputJson\bin\Debug\ProcessOutputJson.dll</HintPath>
+    </Reference>
+    <Reference Include="RegEx.Video">
+      <HintPath>..\..\..\..\Documents\REPOS\source\repos\RegEx.Video\RegEx.Video\bin\Debug\netcoreapp2.0\RegEx.Video.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

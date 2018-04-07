@@ -1,6 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq.JsonPath;
+
+using ProcessOutputJson;
+using OCR;
+using RegEx.Video;
+using RegEx.Video.Models;
+using RegEx.Video.Utilities;
+
 
 namespace RegExVideoJobRunner
 {
@@ -38,10 +49,15 @@ namespace RegExVideoJobRunner
                     switch (job.JobType)
                     {
                         case RegExJobType.OcrUploadVideoJob:
-                            //
+
+                            var json = JsonConvert.DeserializeObject< JSONOcrUploadVideoDTO>(job.OutputJson,new JsonSerializerSettings(){MissingMemberHandling = MissingMemberHandling.Ignore,ReferenceLoopHandling = ReferenceLoopHandling.Ignore,MetadataPropertyHandling = MetadataPropertyHandling.Ignore});
+                            job.Status = "Started";
+                            OCR.Program.Main(new string[]{json.input.FilePath});
+                            job.Status = "Finished";
                             break;
                         case RegExJobType.OcrCreateMediaAnalyticsJob:
                             //
+
                             break;
                         case RegExJobType.OcrDownloadResultJob:
                             //
