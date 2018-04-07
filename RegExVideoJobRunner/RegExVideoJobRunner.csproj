@@ -16,6 +16,9 @@
     <Reference Include="AzureMediaExampleConsole">
       <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\AzureMediaExampleConsole\bin\Debug\AzureMediaExampleConsole.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.MediaServices.Client">
+      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\AzureMediaExampleConsole\bin\Debug\Microsoft.WindowsAzure.MediaServices.Client.dll</HintPath>
+    </Reference>
     <Reference Include="ProcessOutputJson">
       <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\ProcessOutputJson\bin\Debug\ProcessOutputJson.dll</HintPath>
     </Reference>
