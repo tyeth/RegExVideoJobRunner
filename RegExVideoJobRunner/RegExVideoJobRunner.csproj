@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.Media" Version="0.2.0" />
+    <PackageReference Include="Microsoft.Azure.Management.Storage" Version="7.1.0-preview" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
     <PackageReference Include="NET-Standard-Library-Extension" Version="1.0.1" />
@@ -13,15 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="AzureMediaExampleConsole">
-      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\AzureMediaExampleConsole\bin\Debug\AzureMediaExampleConsole.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAzure.MediaServices.Client">
-      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\AzureMediaExampleConsole\bin\Debug\Microsoft.WindowsAzure.MediaServices.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="ProcessOutputJson">
-      <HintPath>..\..\..\..\Documents\REPOS\source\repos\AzureMediaExampleConsole\ProcessOutputJson\bin\Debug\ProcessOutputJson.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\RegEx.Video.Utilities\RegEx.Video.Utilities.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="RegEx.Video">
       <HintPath>..\..\..\..\Documents\REPOS\source\repos\RegEx.Video\RegEx.Video\bin\Debug\netcoreapp2.0\RegEx.Video.dll</HintPath>
     </Reference>

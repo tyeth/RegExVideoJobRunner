@@ -9,8 +9,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Linq.JsonPath;
 using Microsoft.WindowsAzure.MediaServices;
 using Microsoft.WindowsAzure.MediaServices.Client;
-using ProcessOutputJson;
-using OCR;
 using RegEx.Video;
 using RegEx.Video.Models;
 using RegEx.Video.Utilities;
@@ -22,8 +20,11 @@ namespace RegExVideoJobRunner
     {
         static void Main(string[] args)
         {
-
             //EF Core import done.
+
+            // Program.CS has been updated in NetFramework version. Takes pattern etc. Diff and fix Ocr class too
+
+            // Set ffmpeg to use http://www.ffmpeg.org/ffmpeg-filters.html#Examples-82 for pattern highlighting in video
             while (true)
             {
 
@@ -65,7 +66,7 @@ namespace RegExVideoJobRunner
                             json1.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json1);
                             dbContext.Update(job);
-                            var asset1 = OCR.Program.UploadOcrAsset(json1.input.FilePath);
+                            var asset1 = Ocr.UploadOcrAsset(json1.input.FilePath);
                             json1.LastUpdated = DateTime.UtcNow;
                             json1.IAssetId = asset1.Id;
                             job.IsUploadedToCloud = true;
@@ -82,9 +83,9 @@ namespace RegExVideoJobRunner
                             job.OutputJson = JsonConvert.SerializeObject(json2);
                             dbContext.Update(job);
                             var configurationFile = json2.input.FilePath + ".ocrinput.json";
-                            OCR.Program.CreateVideoInputJson(json2.input.FilePath, configurationFile);
-                            var iasset = OCR.Program.GetAsset(json2.IAssetId);
-                            var job2 = OCR.Program.CreateOcrJob(json2.input.FilePath,iasset);
+                            Ocr.CreateVideoInputJson(json2.input.FilePath, configurationFile);
+                            var iasset = Ocr.GetAsset(json2.IAssetId);
+                            var job2 = Ocr.CreateOcrJob(json2.input.FilePath,iasset);
                             job2.Submit();
                             json2.IJobId = job2.Id;
                             json2.ITaskId = job2.Tasks[0].Id;
@@ -101,7 +102,7 @@ namespace RegExVideoJobRunner
                             json3.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json3);
                             dbContext.Update(job);
-                            var job3 = OCR.Program.GetJob(json3.IJobId);
+                            var job3 = Ocr.GetJob(json3.IJobId);
                             Task progressJobTask = job3.GetExecutionProgressTask(CancellationToken.None);
 
                             progressJobTask.Wait();
@@ -123,7 +124,7 @@ namespace RegExVideoJobRunner
 
                             var outAsset=  job3.OutputMediaAssets[0];
                             Directory.CreateDirectory(json3.OutputFileName);
-                            OCR.Program.DownloadAsset(outAsset,json3.OutputFileName);
+                            Ocr.DownloadAsset(outAsset,json3.OutputFileName);
                             json3.IAssetId = outAsset.Id;
                             json3.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json3);
@@ -138,10 +139,10 @@ namespace RegExVideoJobRunner
                             json4.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json4);
                             dbContext.Update(job);
-                            var   outAsset4 = OCR.Program.GetAsset(json4.IAssetId);
+                            var   outAsset4 = Ocr.GetAsset(json4.IAssetId);
                             Directory.CreateDirectory(json4.OutputFileName);
-                            var matches= ProcessJsonProgram.ExtractRegExMatches(outAsset4.AssetFiles.First().Name);
-                            ProcessJsonProgram.ProcessOutputs(json4.OutputFileName.Replace(".output.json",""),needJpegs:true,needVideo:false,matches:matches, clipDuration: json4.clipDuration);
+                            var matches= Ocr.ExtractRegExMatches(outAsset4.AssetFiles.First().Name);
+                            Ocr.ProcessOutputs(json4.OutputFileName.Replace(".output.json",""),needJpegs:true,needVideo:false,matches:matches, clipDuration: json4.clipDuration);
                             json4.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json4);
                             job.IsCloudJobFinished = true;
@@ -155,10 +156,10 @@ namespace RegExVideoJobRunner
                             json5.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json5);
                             dbContext.Update(job);
-                            var outAsset5 = OCR.Program.GetAsset(json5.IAssetId);
+                            var outAsset5 = Ocr.GetAsset(json5.IAssetId);
                             Directory.CreateDirectory(json5.OutputFileName);
-                            var matches5 = ProcessJsonProgram.ExtractRegExMatches(outAsset5.AssetFiles.First().Name);
-                            ProcessJsonProgram.ProcessOutputs(json5.OutputFileName.Replace(".output.json", ""), needJpegs: false, needVideo: true, matches: matches5, clipDuration:json5.clipDuration);
+                            var matches5 = Ocr.ExtractRegExMatches(outAsset5.AssetFiles.First().Name);
+                            Ocr.ProcessOutputs(json5.OutputFileName.Replace(".output.json", ""), needJpegs: false, needVideo: true, matches: matches5, clipDuration:json5.clipDuration);
                             json5.LastUpdated = DateTime.UtcNow;
                             job.OutputJson = JsonConvert.SerializeObject(json5);
                             job.IsCloudJobFinished = true;

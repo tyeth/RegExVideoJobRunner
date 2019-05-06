@@ -1,0 +1,3 @@
+Import-Module .\CreateAndListAzureMediaResourceServicePricipalsAndRoles.psm1
+
+AzListAllServicePricipalsAndRoles -Filter "regex.video"
