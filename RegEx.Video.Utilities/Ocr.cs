@@ -75,12 +75,31 @@ namespace RegEx.Video.Utilities
 
         public static IAsset GetAsset(string id)
         {
-            return _context.Assets.First(x => x.Id == id);
+            if (string.IsNullOrEmpty(id)) throw new ArgumentNullException(id);
+            return _context.Assets.FirstMatchingAsset(id);
         }
 
+        public static IAsset FirstMatchingAsset(this IEnumerable<IAsset> assets,string id)
+        {
+            foreach (var VARIABLE in assets)
+            {
+                if (VARIABLE.Id == id) return VARIABLE;
+            }
+            var count = assets.Count();
+            for (int i = 0; i < count; i++)
+            {
+                var asset = assets.ElementAt(i);
+                 if (asset.Id == id) return asset;
+            }
+            return null;
+        }
         public static IJob GetJob(string id)
         {
-            return _context.Jobs.First(x => x.Id == id);
+            foreach (var contextJob in _context.Jobs)
+            {
+                if (contextJob.Id == id) return contextJob;
+            }
+            return null;
         }
 
         private static string SafelyGetConfigValue(string key)

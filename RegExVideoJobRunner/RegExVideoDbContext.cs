@@ -123,6 +123,7 @@ namespace RegExVideoJobRunner
 
             modelBuilder.Entity<RegExVideoFile>(entity =>
             {
+                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.UploadTimeStamp).HasDefaultValueSql("('0001-01-01T00:00:00.000')");
@@ -130,6 +131,7 @@ namespace RegExVideoJobRunner
 
             modelBuilder.Entity<RegExVideoJob>(entity =>
             {
+                entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
         }
