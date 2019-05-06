@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using RegEx.Video.Models;
 namespace RegExVideoJobRunner
 {
     public partial class RegExVideoDbContext : DbContext
@@ -11,8 +11,8 @@ namespace RegExVideoJobRunner
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<Files> Files { get; set; }
-        public virtual DbSet<Jobs> Jobs { get; set; }
+        public virtual DbSet<RegExVideoFile> Files { get; set; }
+        public virtual DbSet<RegExVideoJob> Jobs { get; set; }
 
         // Unable to generate entity type for table 'dbo.Table1'. Please see the warning messages.
 
@@ -121,14 +121,14 @@ namespace RegExVideoJobRunner
                     .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<Files>(entity =>
+            modelBuilder.Entity<RegExVideoFile>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.UploadTimeStamp).HasDefaultValueSql("('0001-01-01T00:00:00.000')");
             });
 
-            modelBuilder.Entity<Jobs>(entity =>
+            modelBuilder.Entity<RegExVideoJob>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
