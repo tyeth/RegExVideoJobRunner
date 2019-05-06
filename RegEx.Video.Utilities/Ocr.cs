@@ -359,9 +359,10 @@ namespace RegEx.Video.Utilities
                 catch(Exception e){}
                 if (tsot < 3) tsot = ocrDuration.TotalSeconds; //make min_vid_clip parameter
                 var origName = Path.GetFileNameWithoutExtension(_videofile);
-                var newSnippetFile = _videofile.Replace(origName ?? string.Empty, $"out_{uNow}_{i}_{origName}" + 
-                                                                                  ((extension.Length < 0 && !extension.StartsWith(".")) ? "." + extension : extension)
-                                                       );
+                var newSnippetFile = _videofile.Replace(origName ?? string.Empty, $"out_{uNow}_{i}_{origName}") +
+                                    ((extension.Length < 0 && !extension.StartsWith("."))
+                                        ? "." + extension
+                                        : extension);
                 var acceleration = ""; // -hwaccel cuvid
 #if DEBUG
                 acceleration = "-threads 8 ";
